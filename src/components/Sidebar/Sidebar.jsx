@@ -1,18 +1,29 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import "./Sidebar.scss";
 
+/** Convite do servidor onde o bot do CotaBot atende. */
+const DISCORD_INVITE = "https://discord.gg/8UJwGkKk";
+
 export default function Sidebar() {
+  const { user, loading, logout } = useAuth();
+  const navigate = useNavigate();
+
+  async function handleLogout() {
+    await logout();
+    navigate("/", { replace: true });
+  }
+
   return (
     <aside className="sidebar">
-      <div className="sidebar__logo">
-        {/* PLACEHOLDER: ícone ou logo da aplicação */}
+      <NavLink to="/" className="sidebar__logo" aria-label="Ir para a Home">
         <img
-         src="src\assets\logo.png" 
+         src="src\assets\logo.png"
          alt="logotipo"
          className="logotipo"
         />
         <h1 className="logo-nome">Cota Bot</h1>
-      </div>
+      </NavLink>
 
       <nav className="sidebar__nav">
         <NavLink
@@ -48,7 +59,55 @@ export default function Sidebar() {
 
           <span className="sidebar__label">Notificações</span>
         </NavLink>
+
+        {/* Link externo: abre o convite do servidor onde o bot responde. */}
+        <a
+          className="sidebar__link"
+          href={DISCORD_INVITE}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span className="sidebar__icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M15.3 4.6A13 13 0 0 0 12.1 3.6l-.2.4a12 12 0 0 1 2.8 1.3 11.4 11.4 0 0 0-9.4 0A12 12 0 0 1 8.1 4l-.2-.4a13 13 0 0 0-3.2 1A16.5 16.5 0 0 0 2 15.3a13.2 13.2 0 0 0 4 2 9.7 9.7 0 0 0 .8-1.4 8.5 8.5 0 0 1-1.3-.7l.3-.2a9.3 9.3 0 0 0 8.4 0l.3.2a8.5 8.5 0 0 1-1.3.7c.3.5.5 1 .8 1.4a13.2 13.2 0 0 0 4-2 16.4 16.4 0 0 0-2.7-9.7ZM7.3 13.2c-.8 0-1.4-.8-1.4-1.7 0-1 .6-1.7 1.4-1.7.8 0 1.5.8 1.4 1.7 0 .9-.6 1.7-1.4 1.7Zm5.4 0c-.8 0-1.4-.8-1.4-1.7 0-1 .6-1.7 1.4-1.7.8 0 1.5.8 1.4 1.7 0 .9-.6 1.7-1.4 1.7Z"
+                stroke="#3C3C40" strokeWidth="0.8" strokeLinecap="round" strokeLinejoin="round"
+              />
+            </svg>
+          </span>
+
+          <span className="sidebar__label">Discord</span>
+        </a>
       </nav>
+
+      {/* A navegação é livre; a conta só é necessária para os alertas. */}
+      <footer className="sidebar__account">
+        {loading ? null : user ? (
+          <>
+            <p className="sidebar__user" title={user.email}>
+              {user.username}
+            </p>
+
+            <button
+              type="button"
+              className="sidebar__account-button"
+              onClick={handleLogout}
+            >
+              Sair
+            </button>
+          </>
+        ) : (
+          <>
+            <p className="sidebar__hint">
+              Entre para criar alertas de cotação.
+            </p>
+
+            <NavLink className="sidebar__account-button" to="/login">
+              Entrar
+            </NavLink>
+          </>
+        )}
+      </footer>
     </aside>
   );
 }

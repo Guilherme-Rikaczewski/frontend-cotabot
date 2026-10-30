@@ -22,7 +22,8 @@
             margin-bottom: auto;
         }
 
-        button {
+        button,
+        .target-values__edit {
             height: 50px;
             width: 50px;
             background: #9DBBFF;
@@ -32,9 +33,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
 
-        button:hover {
+        button:hover,
+        .target-values__edit:hover {
             background: #7395e6;
             transition:
                 background-color 0.4s ease,
@@ -42,4 +45,64 @@
         }
     }
 
+    &__status {
+        margin-top: 18px;
+        font-size: 14px;
+        color: #A7A7AD;
+        line-height: 1.5;
+
+        a {
+            color: #829DD9;
+            font-weight: 600;
+        }
+    }
+
+    &__list {
+        list-style: none;
+        margin-top: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        // O card tem altura fixa no grid da Home: a lista rola por dentro.
+        max-height: 170px;
+        overflow-y: auto;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        background: #FFFFFF;
+        border-radius: 10px;
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+
+    &__coin {
+        font-weight: 700;
+        min-width: 42px;
+    }
+
+    &__value {
+        font-weight: 600;
+        color: #3C3C40;
+    }
+
+    &__badge {
+        margin-left: auto;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 4px 10px;
+        border-radius: 999px;
+
+        background: #E0E0ED;
+        color: #5A5A66;
+
+        &--done {
+            background: #E7F6EC;
+            color: #1B7F4B;
+        }
+    }
 }

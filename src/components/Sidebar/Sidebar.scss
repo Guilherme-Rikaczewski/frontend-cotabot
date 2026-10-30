@@ -36,6 +36,16 @@
     height: 64px;
     margin-bottom: 40px;
     gap: 7px;
+
+    // Clicável: leva para a Home.
+    text-decoration: none;
+    border-radius: 10px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #EFEFF5;
+      transition: background-color 0.3s ease;
+    }
   }
 
   &__nav {
@@ -98,5 +108,53 @@
     font-size: 15px;
     font-weight: 500;
     white-space: nowrap;
+  }
+
+  &__account {
+    margin-top: auto;
+    padding: 16px 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-top: 1px solid #E0E0ED;
+  }
+
+  &__user {
+    font-size: 14px;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__hint {
+    font-size: 12px;
+    color: #A7A7AD;
+    line-height: 1.4;
+  }
+
+  &__account-button {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+
+    border: 0;
+    border-radius: 8px;
+    padding: 10px;
+
+    background: #9DBBFF;
+    color: #3C3C40;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+
+    &:hover {
+      background: #7395e6;
+      color: #ffffff;
+      transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+    }
   }
 }
