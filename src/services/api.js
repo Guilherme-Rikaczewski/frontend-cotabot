@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const apiBaseUrl = "http://localhost:8000/";
-// const apiBaseUrl = "/api";
+// const apiBaseUrl = "http://localhost:8000/";
+const apiBaseUrl = "/api";
 
 /** Sem timeout, uma API travada deixaria a interface carregando para sempre. */
 export const REQUEST_TIMEOUT_MS = 10_000_000;

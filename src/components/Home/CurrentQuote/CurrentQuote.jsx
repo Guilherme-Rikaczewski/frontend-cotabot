@@ -2,6 +2,7 @@
 import "./CurrentQuote.scss";
 import DropDown from "../../DropDown/DropDown";
 import { coinsNames } from "../../../services/coinsList";
+import moneyIcon from "../../../assets/money.png"
 
 export default function CurrentQuote({
     quote,
@@ -14,7 +15,7 @@ export default function CurrentQuote({
         <section className="current-quote">
             <header>
                 <img
-                    src="src/assets/money.png"
+                    src={moneyIcon}
                     alt="money icon"
                 />
                 <p>Escolha a moeda</p>

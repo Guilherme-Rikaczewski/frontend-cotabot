@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import "./DropDown.scss";
+import setaIcon from "../../assets/seta.png"
 
 export default function DropDown({
     coins,
@@ -84,7 +85,7 @@ export default function DropDown({
                 aria-label="Selecionar moeda"
             >
                 <span>{selectedCoin}</span>
-                <img src="src/assets/seta.png" alt="" />
+                <img src={setaIcon} alt="" />
             </button>
 
             <div className="coin-options">

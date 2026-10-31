@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 import { getAlerts } from "../../../services/alertService";
 import "./TargetValues.scss";
+import targetIcon from "../../../assets/target.png"
 
 
 export default function TargetValues() {
@@ -109,7 +110,7 @@ export default function TargetValues() {
     return (
         <section className="target-values">
             <header>
-                <img src="src/assets/target.png" alt="money icon" />
+                <img src={targetIcon} alt="money icon" />
                 <p>Valores alvo</p>
 
                 <Link

@@ -3,6 +3,7 @@ import "./QuoteCalculator.scss";
 import DropDown from "../../DropDown/DropDown";
 import { useState, useEffect } from "react";
 import { coinsCodes, coinsMask } from "../../../services/coinsList";
+import calculatorIcon from "../../../assets/calculator.png"
 
 export default function QuoteCalculator({
     quote,
@@ -99,7 +100,7 @@ export default function QuoteCalculator({
         <section className="quote-calculator">
             <header>
                 <img
-                    src="src/assets/calculator.png"
+                    src={calculatorIcon}
                     alt="Ícone de calculadora"
                 />
                 <p>Calcular valores</p>
