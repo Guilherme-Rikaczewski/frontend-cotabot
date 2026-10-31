@@ -2,6 +2,7 @@
 import "./Graphic.scss";
 import ApexChart from "./LineGraph/ApexChart";
 import DropDown from "../../DropDown/DropDown";
+import graphicIcon from "../../../assets/graphic.png"
 
 const startDate = new Date(2016, 0, 1);
 const currentDate = new Date();
@@ -37,7 +38,7 @@ export default function Graphic({
         <section className="graphic">
             <header>
                 <img
-                    src="src/assets/graphic.png"
+                    src={graphicIcon}
                     alt="money icon"
                 />
 
@@ -48,7 +49,7 @@ export default function Graphic({
                     selected={selectedPeriod}
                     handler={handlePeriodChange}
                     variant="code"
-                    width="150px"
+                    width="180px"
                     className="lista"
                 />
             </header>

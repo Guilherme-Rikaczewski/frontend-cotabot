@@ -33,7 +33,7 @@ const ApexChart = ({ graphData }) => {
             },
             toolbar: {
                 autoSelected: "zoom",
-                offsetX: -160,
+                offsetX: -180,
                 offsetY: -10,
             },
         },
@@ -97,7 +97,7 @@ const ApexChart = ({ graphData }) => {
                 options={options}
                 series={series}
                 type="area"
-                height={255}
+                height="100%"
             />
         </div>
     );

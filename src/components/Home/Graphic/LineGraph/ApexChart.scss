@@ -1,5 +1,6 @@
 #chart {
 //   max-width: 650px;
-  min-width: 800px;
+  min-width: 110vh;
   margin: 0px auto;
+  height: clamp(255px, 17.5vw, 350px);
 }
