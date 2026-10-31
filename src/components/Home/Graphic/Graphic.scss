@@ -9,14 +9,21 @@
 
     header {
         display: flex;
-        align-items: center;
+        // align-items: center;
         gap: 15px;
         font-weight: 500;
         font-size: 2.9vh;
+        width: auto;
 
         img {
             height: 30px;
             width: 30px;
+        }
+
+        .lista {
+            margin-left: auto;
+            margin-bottom: auto;
+            max-height: 0px !important;
         }
     }
 

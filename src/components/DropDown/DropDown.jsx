@@ -7,7 +7,8 @@ export default function DropDown({
     variant = "name",
     width,
     handler,
-    selected
+    selected,
+    className
 }) {
     const [isOpen, setIsOpen] = useState(false);
     const [internalCoin, setInternalCoin] = useState(
@@ -66,7 +67,7 @@ export default function DropDown({
     return (
         <div
             ref={dropdownRef}
-            className={`coin-dropdown coin-dropdown--${variant} ${
+            className={`${className} coin-dropdown coin-dropdown--${variant} ${
                 isOpen ? "open" : ""
             } ${openUpward ? "open-upward" : ""}`}
             style={

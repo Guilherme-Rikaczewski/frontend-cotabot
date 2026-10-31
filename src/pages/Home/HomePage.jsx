@@ -1,5 +1,7 @@
+
 import "./HomePage.scss";
 import { useState, useEffect } from "react";
+
 import CurrentQuote from "../../components/Home/CurrentQuote/CurrentQuote";
 import QuoteCalculator from "../../components/Home/QuoteCalculator/QuoteCalculator";
 import TargetValues from "../../components/Home/TargetValues/TargetValues";
@@ -20,28 +22,35 @@ export default function HomePage() {
     const [origin, setOrigin] = useState("Dólar Americano");
     const [target, setTarget] = useState("Real Brasileiro");
 
+    const [selectedPeriod, setSelectedPeriod] = useState("1 Month");
+    const [selectedDays, setSelectedDays] = useState(31);
+
+    const localOrigins = ["USD", "EUR", "BTC"];
+    const localTargets = ["BRL"];
+
+    // Atualiza o período selecionado.
+    function handlePeriodChange(label, days) {
+        setSelectedPeriod(label);
+        setSelectedDays(days);
+    }
+
+    // Busca a cotação atual.
     useEffect(() => {
         const controller = new AbortController();
 
-        async function loadQuotes() {
+        async function loadCurrentQuote() {
             const normalizedOrigin = coinsMask[origin];
             const normalizedTarget = coinsMask[target];
 
             if (!normalizedOrigin || !normalizedTarget) {
                 setQuote(null);
-                setQuoteList(null);
                 return;
             }
 
-            // Mesma moeda: cotação igual a 1.
             if (normalizedOrigin === normalizedTarget) {
                 setQuote(1);
-                setQuoteList([]);
                 return;
             }
-
-            const localOrigins = ["USD", "EUR", "BTC"];
-            const localTargets = ["BRL"];
 
             const useRegistered =
                 localOrigins.includes(normalizedOrigin) &&
@@ -52,43 +61,79 @@ export default function HomePage() {
                 : getQuoteRealTime;
 
             try {
-                // Busca a cotação atual e o histórico em paralelo.
-                const [currentResult, periodResult] = await Promise.all([
-                    getFunction(
-                        normalizedOrigin,
-                        normalizedTarget,
-                        controller.signal
-                    ),
-                    getQuoteOnPeriod(
-                        normalizedOrigin,
-                        normalizedTarget,
-                        30,
-                        "day",
-                        controller.signal
-                    )
-                ]);
+                const currentResult = await getFunction(
+                    normalizedOrigin,
+                    normalizedTarget,
+                    controller.signal
+                );
 
-                // Evita atualizar os estados com respostas antigas.
                 if (controller.signal.aborted) return;
 
                 setQuote(currentResult?.conversion ?? null);
-                setQuoteList(periodResult);
+
             } catch (error) {
                 if (controller.signal.aborted) return;
 
-                console.error("Erro ao buscar cotações:", error);
-
+                console.error("Erro ao buscar cotação:", error);
                 setQuote(null);
+            }
+        }
+
+        loadCurrentQuote();
+
+        return () => controller.abort();
+
+    }, [origin, target]);
+
+    // Busca o histórico de acordo com o período selecionado.
+    useEffect(() => {
+        const controller = new AbortController();
+
+        async function loadPeriodQuotes() {
+            const normalizedOrigin = coinsMask[origin];
+            const normalizedTarget = coinsMask[target];
+
+            if (!normalizedOrigin || !normalizedTarget) {
+                setQuoteList(null);
+                return;
+            }
+
+            if (normalizedOrigin === normalizedTarget) {
+                setQuoteList([]);
+                return;
+            }
+
+            // Um dia: dados por hora.
+            // Demais períodos: dados por dia.
+            const interval =
+                selectedDays === 1 ? "hour" : "day";
+
+            try {
+                const periodResult = await getQuoteOnPeriod(
+                    normalizedOrigin,
+                    normalizedTarget,
+                    selectedDays,
+                    interval,
+                    controller.signal
+                );
+
+                if (controller.signal.aborted) return;
+
+                setQuoteList(periodResult);
+
+            } catch (error) {
+                if (controller.signal.aborted) return;
+
+                console.error("Erro ao buscar histórico:", error);
                 setQuoteList(null);
             }
         }
 
-        loadQuotes();
+        loadPeriodQuotes();
 
-        return () => {
-            controller.abort();
-        };
-    }, [origin, target]);
+        return () => controller.abort();
+
+    }, [origin, target, selectedDays]);
 
     return (
         <main>
@@ -119,6 +164,8 @@ export default function HomePage() {
 
                 <Graphic
                     quotePeriodList={quoteList}
+                    selectedPeriod={selectedPeriod}
+                    handlerPeriod={handlePeriodChange}
                 />
             </div>
         </main>
