@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "./Sidebar.scss";
+import logoIcon from "../../assets/logo.png"
 
 /** Convite do servidor onde o bot do CotaBot atende. */
 const DISCORD_INVITE = "https://discord.gg/8UJwGkKk";
@@ -18,7 +19,7 @@ export default function Sidebar() {
     <aside className="sidebar">
       <NavLink to="/" className="sidebar__logo" aria-label="Ir para a Home">
         <img
-         src="src\assets\logo.png"
+         src={logoIcon}
          alt="logotipo"
          className="logotipo"
         />
