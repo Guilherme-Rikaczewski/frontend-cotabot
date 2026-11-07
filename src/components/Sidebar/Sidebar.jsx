@@ -4,7 +4,7 @@ import "./Sidebar.scss";
 import logoIcon from "../../assets/logo.png"
 
 /** Convite do servidor onde o bot do CotaBot atende. */
-const DISCORD_INVITE = "https://discord.gg/8UJwGkKk";
+const DISCORD_INVITE = "https://discord.gg/zkwWrT52P2";
 
 export default function Sidebar() {
   const { user, loading, logout } = useAuth();
